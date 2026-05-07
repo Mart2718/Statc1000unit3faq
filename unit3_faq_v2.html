@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STAT C1000 · Unit 3 Student FAQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1b2d5e; --navy-deep: #0f1c3f; --navy-mid: #243470;
+    --gold: #d4960c; --gold-light: #f0b429; --gold-pale: #fef3d8;
+    --coral: #c95a3e; --coral-pale: #fdf0ec;
+    --teal: #1a7a6e; --teal-pale: #e8f5f3;
+    --purple: #534AB7; --purple-pale: #EEEDFE;
+    --cream: #fdfaf4; --parchment: #f5ede0;
+    --border: #e8d9c5; --text: #221c16; --muted: #6b5d52; --white: #ffffff;
+    --radius: 14px; --radius-sm: 8px;
+    --shadow-card: 0 4px 24px rgba(27,45,94,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); font-size: 16px; line-height: 1.7; }
+
+  /* HEADER */
+  .site-header { background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 60%, var(--navy-mid) 100%); padding: 0; position: relative; overflow: hidden; }
+  .header-deco { position: absolute; top: 0; right: 0; bottom: 0; width: 45%; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Ccircle cx='350' cy='40' r='180' fill='rgba(244,180,42,0.06)'/%3E%3Ccircle cx='250' cy='240' r='120' fill='rgba(244,180,42,0.04)'/%3E%3C/svg%3E") no-repeat center; background-size: cover; pointer-events: none; }
+  .header-inner { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 2.5rem 2rem 2rem; }
+  .badge-sac { display: inline-flex; align-items: center; gap: 8px; background: rgba(212,150,12,0.18); border: 1px solid rgba(240,180,41,0.4); border-radius: 100px; padding: 5px 14px; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: var(--gold-light); text-transform: uppercase; margin-bottom: 1rem; }
+  .badge-sac::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold-light); display: inline-block; }
+  .header-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 0.5rem; }
+  .header-title em { font-style: italic; color: var(--gold-light); }
+  .header-sub { font-size: 15px; color: rgba(255,255,255,0.7); font-weight: 300; margin-bottom: 1.5rem; }
+  .hope-strip { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius-sm); padding: 0.9rem 1.2rem; display: flex; align-items: flex-start; gap: 12px; }
+  .hope-icon { font-size: 20px; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+  .hope-text { font-size: 14px; color: rgba(255,255,255,0.85); font-weight: 400; line-height: 1.6; }
+  .hope-text strong { color: var(--gold-light); font-weight: 600; }
+
+  /* STATS BAR */
+  .stats-bar { background: var(--parchment); border-bottom: 1px solid var(--border); padding: 0.75rem 2rem; }
+  .stats-bar-inner { max-width: 960px; margin: 0 auto; display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; }
+  .stat-pill { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+  .stat-pill strong { color: var(--navy); font-weight: 600; }
+
+  /* CONTROLS */
+  .controls { max-width: 960px; margin: 0 auto; padding: 1.5rem 2rem 0.5rem; }
+  .search-wrap { position: relative; margin-bottom: 1.25rem; }
+  .search-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--muted); }
+  #searchInput { width: 100%; padding: 12px 16px 12px 44px; border: 1.5px solid var(--border); border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 15px; background: var(--white); color: var(--text); outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+  #searchInput:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(27,45,94,0.1); }
+  #searchInput::placeholder { color: #b0a498; }
+  .filter-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 0.5rem; }
+  .filter-btn { padding: 7px 16px; border-radius: 100px; border: 1.5px solid var(--border); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--muted); cursor: pointer; transition: all 0.18s; display: flex; align-items: center; gap: 7px; }
+  .filter-btn:hover { border-color: var(--navy); color: var(--navy); }
+  .filter-btn.active { background: var(--navy); border-color: var(--navy); color: var(--white); }
+  .filter-btn .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+
+  /* MAIN */
+  main { max-width: 960px; margin: 0 auto; padding: 1rem 2rem 3rem; }
+
+  /* SECTION HEADERS */
+  .section-header { display: flex; align-items: center; gap: 14px; margin: 2rem 0 1rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--border); }
+  .section-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 600; color: var(--navy); }
+  .section-count { margin-left: auto; font-size: 12px; color: var(--muted); background: var(--parchment); border: 1px solid var(--border); border-radius: 100px; padding: 3px 10px; font-weight: 500; }
+
+  /* FAQ CARDS */
+  .faq-list { display: flex; flex-direction: column; gap: 10px; }
+  .faq-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: box-shadow 0.2s, border-color 0.2s; }
+  .faq-card:hover { border-color: #c9b9a0; box-shadow: var(--shadow-card); }
+  .faq-card.open { border-color: var(--navy); }
+  .faq-trigger { display: flex; align-items: flex-start; gap: 14px; padding: 1.1rem 1.3rem; cursor: pointer; background: none; border: none; width: 100%; text-align: left; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; color: var(--text); line-height: 1.5; }
+  .q-icon { width: 28px; height: 28px; border-radius: 50%; background: var(--parchment); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--gold); flex-shrink: 0; margin-top: 1px; border: 1.5px solid var(--border); font-family: 'Playfair Display', serif; }
+  .faq-card.open .q-icon { background: var(--navy); border-color: var(--navy); color: var(--gold-light); }
+  .faq-q { flex: 1; }
+  .chevron { width: 20px; height: 20px; flex-shrink: 0; margin-top: 3px; transition: transform 0.25s; color: var(--muted); }
+  .faq-card.open .chevron { transform: rotate(180deg); color: var(--navy); }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+  .tag { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; padding: 2px 8px; border-radius: 100px; border: 1px solid; }
+  .tag.s-tag { background: #eef2ff; color: #3b55b0; border-color: #c7d0f5; }
+  .faq-body { overflow: hidden; max-height: 0; transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1); }
+  .faq-body-inner { padding: 0 1.3rem 1.3rem 3.8rem; border-top: 1px solid var(--border); }
+  .answer-head { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0.9rem 0 0.4rem; }
+  .answer-text { font-size: 14.5px; line-height: 1.75; color: #3a2e28; }
+  .answer-text p { margin-bottom: 0.6rem; }
+  .answer-text p:last-child { margin-bottom: 0; }
+  .answer-text strong { color: var(--navy); font-weight: 600; }
+  .answer-text em { color: var(--coral); font-style: normal; font-weight: 600; }
+  .tip-box { background: var(--gold-pale); border-left: 3px solid var(--gold); border-radius: 0; padding: 0.7rem 0.9rem; margin-top: 0.75rem; font-size: 13.5px; line-height: 1.65; color: #3d2e10; }
+  .tip-box b { color: #7a4e05; }
+  .rule-box { background: var(--coral-pale); border-left: 3px solid var(--coral); border-radius: 0; padding: 0.7rem 0.9rem; margin-top: 0.75rem; font-size: 13.5px; line-height: 1.65; color: #4a1f13; font-weight: 500; }
+  .rule-box b { color: var(--coral); }
+  .info-box { background: var(--teal-pale); border-left: 3px solid var(--teal); border-radius: 0; padding: 0.7rem 0.9rem; margin-top: 0.75rem; font-size: 13.5px; line-height: 1.65; color: #0b3d37; }
+  .info-box b { color: var(--teal); }
+  .mistake-box { background: var(--purple-pale); border-left: 3px solid var(--purple); border-radius: 0; padding: 0.7rem 0.9rem; margin-top: 0.75rem; font-size: 13.5px; line-height: 1.65; color: #26215C; }
+  .mistake-box b { color: var(--purple); }
+
+  /* DECISION TABLE */
+  .decision-table { width: 100%; border-collapse: collapse; margin-top: 0.75rem; font-size: 13px; }
+  .decision-table th { background: var(--navy); color: rgba(255,255,255,0.9); padding: 8px 12px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.04em; }
+  .decision-table th:first-child { border-radius: var(--radius-sm) 0 0 0; }
+  .decision-table th:last-child { border-radius: 0 var(--radius-sm) 0 0; }
+  .decision-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  .decision-table tr:last-child td { border-bottom: none; }
+  .decision-table tr:nth-child(even) td { background: var(--parchment); }
+  .test-badge { display: inline-block; background: var(--navy); color: var(--gold-light); border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.03em; }
+
+  /* ERROR GRID */
+  .error-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 0.75rem; }
+  .error-card { border-radius: var(--radius-sm); padding: 0.75rem; font-size: 13px; }
+  .error-card.type1 { background: #fdf0ec; border: 1.5px solid #f0a896; }
+  .error-card.type2 { background: #eef2ff; border: 1.5px solid #c7d0f5; }
+  .error-label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+  .error-card.type1 .error-label { color: var(--coral); }
+  .error-card.type2 .error-label { color: #3b55b0; }
+  .error-name { font-weight: 600; color: var(--text); font-size: 13px; margin-bottom: 3px; }
+  .error-desc { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+  /* DECISION TREE */
+  #decisionTree { background: var(--white); border: 2px solid var(--navy); border-radius: var(--radius); overflow: hidden; margin-bottom: 0.5rem; }
+  .tree-header { background: var(--navy); padding: 1rem 1.3rem; display: flex; align-items: center; gap: 12px; }
+  .tree-header-text h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--white); }
+  .tree-header-text p { font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 2px; }
+  .tree-body { padding: 1.3rem; }
+  .tree-breadcrumb { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; min-height: 26px; }
+  .crumb { font-size: 11px; background: var(--parchment); border: 1px solid var(--border); border-radius: 100px; padding: 3px 10px; color: var(--muted); font-weight: 500; display: flex; align-items: center; gap: 5px; }
+  .crumb::after { content: '›'; color: #b0a498; }
+  .crumb:last-child::after { display: none; }
+  .tree-question { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 600; color: var(--navy); margin-bottom: 0.35rem; }
+  .tree-context { font-size: 13.5px; color: var(--muted); margin-bottom: 1rem; font-style: italic; }
+  .tree-options { display: flex; flex-direction: column; gap: 8px; }
+  .tree-option { display: flex; flex-direction: column; padding: 0.9rem 1.1rem; border: 1.5px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all 0.18s; background: var(--cream); text-align: left; font-family: 'DM Sans', sans-serif; }
+  .tree-option:hover { border-color: var(--navy); background: var(--white); box-shadow: 0 2px 12px rgba(27,45,94,0.08); }
+  .tree-option-label { font-size: 15px; font-weight: 600; color: var(--navy); }
+  .tree-option-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .tree-result { padding: 1.1rem 1.3rem; background: linear-gradient(135deg, #0f1c3f 0%, #1b2d5e 100%); border-radius: var(--radius-sm); margin-top: 0.5rem; }
+  .result-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 0.4rem; }
+  .result-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 0.3rem; }
+  .result-symbol { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.05rem; color: rgba(255,255,255,0.7); margin-bottom: 0.8rem; }
+  .result-note { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 0.8rem; font-style: italic; }
+  .result-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .result-btn { padding: 8px 16px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.18s; border: none; }
+  .result-btn.primary { background: var(--gold); color: #1a0f00; }
+  .result-btn.primary:hover { background: var(--gold-light); }
+  .result-btn.secondary { background: rgba(255,255,255,0.12); color: var(--white); border: 1px solid rgba(255,255,255,0.25); }
+  .result-btn.secondary:hover { background: rgba(255,255,255,0.2); }
+  .tree-restart { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .restart-btn { background: none; border: 1.5px solid var(--border); border-radius: 100px; padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--muted); cursor: pointer; transition: all 0.18s; font-weight: 500; }
+  .restart-btn:hover { border-color: var(--navy); color: var(--navy); }
+  .tree-step-indicator { font-size: 12px; color: var(--muted); margin-left: auto; }
+
+  /* ARTOFSTAT SECTION */
+  .artofstat-section { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-top: 2.5rem; }
+  .artofstat-header { background: #1a7a6e; padding: 1rem 1.3rem; display: flex; align-items: center; gap: 12px; }
+  .artofstat-header h2 { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--white); }
+  .artofstat-header p { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+  .artofstat-intro { padding: 1rem 1.3rem 0.5rem; font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .artofstat-intro a { color: var(--teal); font-weight: 600; text-decoration: none; }
+  .artofstat-intro a:hover { text-decoration: underline; }
+  .artofstat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; padding: 1rem 1.3rem 1.3rem; }
+  .aos-card { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 0.9rem; background: var(--cream); transition: border-color 0.18s, box-shadow 0.18s; }
+  .aos-card:hover { border-color: var(--teal); box-shadow: 0 2px 12px rgba(26,122,110,0.08); }
+  .aos-test-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 8px; border-radius: 100px; margin-bottom: 6px; }
+  .aos-test-badge.z { background: #e8f5f3; color: var(--teal); border: 1px solid #b3ddd7; }
+  .aos-test-badge.t { background: #eef2ff; color: #3b55b0; border: 1px solid #c7d0f5; }
+  .aos-name { font-weight: 600; font-size: 14px; color: var(--navy); margin-bottom: 4px; line-height: 1.3; }
+  .aos-where { font-size: 12px; color: var(--muted); margin-bottom: 6px; line-height: 1.4; }
+  .aos-note { font-size: 11.5px; color: var(--coral); font-weight: 600; margin-bottom: 8px; background: var(--coral-pale); padding: 3px 7px; border-radius: 4px; display: inline-block; }
+  .aos-video-btn { display: inline-flex; align-items: center; gap: 5px; background: var(--teal); color: var(--white); border: none; border-radius: 100px; padding: 5px 12px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; text-decoration: none; transition: background 0.18s; }
+  .aos-video-btn:hover { background: #0f6e56; }
+  .aos-video-icon { width: 14px; height: 14px; flex-shrink: 0; }
+
+  /* HIDDEN / MISC */
+  .faq-item.hidden { display: none; }
+  .section-group.hidden { display: none; }
+  #noResults { text-align: center; padding: 3rem 1rem; display: none; }
+  #noResults p { font-size: 15px; color: var(--muted); }
+  #noResults strong { color: var(--navy); }
+  .math { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1em; color: var(--navy); }
+  footer { background: var(--navy-deep); padding: 1.5rem 2rem; text-align: center; }
+  .footer-inner { max-width: 960px; margin: 0 auto; }
+  footer p { font-size: 13px; color: rgba(255,255,255,0.45); }
+  footer strong { color: rgba(255,255,255,0.75); font-weight: 500; }
+  @media (max-width: 600px) {
+    .header-inner, main, .controls { padding-left: 1rem; padding-right: 1rem; }
+    .stats-bar-inner { gap: 1rem; }
+    .error-grid { grid-template-columns: 1fr; }
+    .faq-body-inner { padding-left: 1rem; }
+    .artofstat-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-deco"></div>
+  <div class="header-inner">
+    <div class="badge-sac">SAC Hope Academy · STAT C1000</div>
+    <h1 class="header-title">Unit 3 <em>Student FAQ</em></h1>
+    <p class="header-sub">Confidence Intervals · Hypothesis Testing · Two-Sample Tests</p>
+    <div class="hope-strip">
+      <div class="hope-icon">✦</div>
+      <div class="hope-text"><strong>These questions came from your classmates.</strong> Every confusion you feel right now is shared by someone sitting next to you. That is not weakness — that is the beginning of learning. Use this resource as your study companion. You belong here.</div>
+    </div>
+  </div>
+</header>
+
+<div class="stats-bar">
+  <div class="stats-bar-inner">
+    <div class="stat-pill">📋 <strong>19</strong> frequently asked questions</div>
+    <div class="stat-pill">🗺️ Interactive <strong>decision tree</strong></div>
+    <div class="stat-pill">🏅 Covers <strong>S13 – S20</strong></div>
+    <div class="stat-pill">🤝 Built from <strong>real student questions</strong></div>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    <input type="text" id="searchInput" placeholder="Search questions… (e.g., p-value, degrees of freedom, paired test)">
+  </div>
+  <div class="filter-row">
+    <button class="filter-btn active" data-cat="all" onclick="filterCat(this,'all')"><span class="dot" style="background:#1b2d5e"></span>All Topics</button>
+    <button class="filter-btn" data-cat="dist" onclick="filterCat(this,'dist')"><span class="dot" style="background:#1a7a6e"></span>Distributions &amp; Foundations</button>
+    <button class="filter-btn" data-cat="choose" onclick="filterCat(this,'choose')"><span class="dot" style="background:#d4960c"></span>Choosing the Right Test</button>
+    <button class="filter-btn" data-cat="hyp" onclick="filterCat(this,'hyp')"><span class="dot" style="background:#c95a3e"></span>Hypothesis Testing &amp; P-Values</button>
+    <button class="filter-btn" data-cat="adv" onclick="filterCat(this,'adv')"><span class="dot" style="background:#3b55b0"></span>Advanced Mechanics &amp; Tech</button>
+  </div>
+</div>
+
+<main id="mainContent">
+
+  <!-- DECISION TREE -->
+  <div id="decisionTree">
+    <div class="tree-header">
+      <div class="tree-header-text">
+        <h3>🗺️ Which test do I use? — Interactive decision tree</h3>
+        <p>Answer 3–4 quick questions and land on the right procedure every time.</p>
+      </div>
+    </div>
+    <div class="tree-body">
+      <div class="tree-breadcrumb" id="breadcrumb"></div>
+      <div id="treeContent"></div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: Distributions & Foundations -->
+  <section class="section-group" data-cat="dist">
+    <div class="section-header">
+      <div class="section-icon" style="background:#e8f5f3;">🧮</div>
+      <h2 class="section-title">Distributions &amp; Foundations</h2>
+      <span class="section-count">S13 · S14 · 5 questions</span>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item faq-card" data-cat="dist" data-keywords="normal skewed distribution sample size n>30 np nq central limit theorem">
+        <button class="faq-trigger" onclick="toggleFAQ(this)">
+          <span class="q-icon">Q</span>
+          <span class="faq-q">When can I assume the distribution is normal — is it the <span class="math">n &gt; 30</span> rule or the <span class="math">np ≥ 10</span> and <span class="math">nq ≥ 10</span> conditions?<div class="tag-row"><span class="tag s-tag">S13</span><span class="tag s-tag">S14</span></div></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">
+          <p class="answer-head">The answer</p>
+          <div class="answer-text">
+            <p>It depends on which parameter you are estimating — they address two different situations.</p>
+            <p><strong>For means (t-interval / t-test):</strong> Use the <span class="math">n &gt; 30</span> guideline. The CLT tells us the sampling distribution of <span class="math">x̄</span> is approximately normal when n is large enough, even if the population is skewed.</p>
+            <p><strong>For proportions (z-interval / z-test):</strong> Use the <span class="math">np ≥ 10</span> and <span class="math">nq ≥ 10</span> condition. This checks whether you have enough successes and failures to justify a normal approximation.</p>
+          </div>
+          <div class="tip-box"><b>🧠 Memory tip:</b> Means → think "sample size" (n &gt; 30). Proportions → think "successes and failures" (np ≥ 10 and nq ≥ 10).</div>
+          <div class="mistake-box"><b>⚠️ Common mistake:</b> Applying the np ≥ 10 condition to a means problem, or using n &gt; 30 as the normality check for a proportion. The two conditions are <em>not interchangeable</em> — match the condition to the parameter you're estimating.</div>
+        </div></div>
+      </div>
+
+      <div class="faq-item faq-card" data-cat="dist" data-keywords="95% chance probability confidence interval interpretation mean fixed">
+        <button class="faq-trigger" onclick="toggleFAQ(this)">
+          <span class="q-icon">Q</span>
+          <span class="faq-q">Why is it wrong to say "there is a 95% chance the true mean is inside my interval"?<div class="tag-row"><span class="tag s-tag">S14</span></div></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">
+          <p class="answer-head">The answer</p>
+          <div class="answer-text">
+            <p>The true population mean <span class="math">μ</span> is a <em>fixed number</em> — it doesn't move around. It either IS or IS NOT in your specific interval. There is no "chance" involved once the interval is computed.</p>
+            <p>The 95% refers to the <strong>method</strong>, not the specific interval. If you repeated this process with many samples, about 95% of those intervals would capture the true mean.</p>
+          </div>
+          <div class="rule-box"><b>✓ Correct interpretation:</b> "We are 95% confident that the true mean is between [L, U]." The confidence is in the <em>process</em>, not a probability claim about this one interval.</div>
+          <div class="mistake-box"><b>⚠️ Common mistake:</b> Writing "there is a 95% probability the mean is in this interval" on an exam. This will cost you points — the parameter is fixed, not random. The randomness comes from the sample, not the parameter.</div>
+        </div></div>
+      </div>
+
+      <div class="faq-item faq-card" data-cat="dist" data-keywords="round up sample size margin of error n calculation always whole number ceiling">
+        <button class="faq-trigger" onclick="toggleFAQ(this)">
+          <span class="q-icon">Q</span>
+          <span class="faq-q">Why do we always round the final <span class="math">n</span> value <strong>up</strong> when finding the sample size needed for a given margin of error?<div class="tag-row"><span class="tag s-tag">S13</span></div></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">
+          <p class="answer-head">The answer</p>
+          <div class="answer-text">
+            <p>The formula gives us the <em>minimum</em> number of participants to keep the margin of error within the target. Rounding down means fewer observations than required — your actual margin of error would be slightly <em>larger</em> than the goal.</p>
+            <p>Rounding up guarantees we meet or slightly exceed the precision target. You also can't survey a fraction of a person.</p>
+          </div>
+          <div class="tip-box"><b>🧠 Rule:</b> When solving for sample size n, always use the ceiling — round up to the next whole number, even if the decimal is tiny (e.g., 54.01 → 55).</div>
+          <div class="mistake-box"><b>⚠️ Common mistake:</b> Rounding 54.9 down to 54 because "it's almost a whole number." The direction is non-negotiable here — always up, regardless of how small the decimal is.</div>
+        </div></div>
+      </div>
+
+      <div class="faq-item faq-card" data-cat="dist" data-keywords="confidence interval hypothesis test difference purpose estimate range decision claim">
+        <button class="faq-trigger" onclick="toggleFAQ(this)">
+          <span class="q-icon">Q</span>
+          <span class="faq-q">What is the actual difference between a confidence interval and a hypothesis test? When do I use each?<div class="tag-row"><span class="tag s-tag">S13</span><span class="tag s-tag">S14</span><span class="tag s-tag">S15</span></div></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">
+          <p class="answer-head">The answer</p>
+          <div class="answer-text">
+            <p><strong>Confidence Intervals:</strong> Used when you want to <em>estimate</em> a parameter. "What is a plausible range of values for the true mean?" The output is an interval.</p>
+            <p><strong>Hypothesis Tests:</strong> Used when you want to <em>test a specific claim</em>. "Is there evidence the mean is greater than 70?" The output is a conclusion (reject or fail to reject).</p>
+          </div>
+          <div class="info-box"><b>Connection:</b> A CI and a two-tailed hypothesis test are linked — if the hypothesized value falls outside the CI, you would reject H₀ at the corresponding significance level.</div>
+          <div class="mistake-box"><b>⚠️ Common mistake:</b> Running a hypothesis test when the question asks you to "estimate" something, or building a CI when the question contains a specific claim to evaluate. Key words like "estimate the true proportion" → CI; "test the claim that" → hypothesis test.</div>
+        </div></div>
+      </div>
+
+      <div class="faq-item faq-card" data-cat="dist" data-keywords="margin of error t interval formula t* s sqrt n calculate">
+        <button class="faq-trigger" onclick="toggleFAQ(this)">
+          <span class="q-icon">Q</span>
+          <span class="faq-q">How do I calculate the margin of error specifically for a one-sample <span class="math">t</span>-interval?<div class="tag-row"><span class="tag s-tag">S13</span><span class="tag s-tag">S14</span></div></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">
+          <p class="answer-head">The answer</p>
+          <div class="answer-text">
+            <p>The margin of error for a one-sample <span class="math">t</span>-interval is: <strong>ME = t* × (s / √n)</strong></p>
+            <p>Where <strong>t*</strong> is the critical value from the t-distribution (based on confidence level and df = n − 1), <strong>s</strong> is your sample standard deviation, and <strong>n</strong> is your sample size. The full interval is <span class="math">x̄ ± ME</span>.</p>
+          </div>
+          <div class="tip-box"><b>🧠 Larger sample → smaller ME.</b> As n grows, the √n in the denominator gets larger, shrinking the margin of error — more data = more precision.</div>
+          <div class="mistake-box"><b>⚠️ Common mistake:</b> Using <span class="math">z*</span> (like 1.96) instead of <span class="math">t*</span> for a means interval, or forgetting to look up t* with df = n − 1 (not df = n). Also: using the population standard deviation σ when only s is given.</div>
+        </div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 2: Choosing the Right Test -->
+  <section class="section-group" data-cat="choose">
+    <div class="section-header">
+      <div class="section-icon" style="background:#fef3d8;">🗺️</div>
+      <h2 class="section-title">Choosing the Right Test</h2>
+      <span class="section-count">S15 · S19 · 4 questions</span>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item" data-cat="choose" data-keywords="test selection choose z t paired proportion mean categorical quantitative table">
+        <div style="background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:1.1rem 1.3rem;">
+          <p style="font-size:12px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;">📊 Quick Reference — Which Test Do I Use?</p>
+          <table class="decision-table">
+            <thead><tr><th>Scenario Clues</th><th>Use This Test</th><th>Because…</th></tr></thead>
+            <tbody>
+              <tr><td>Categorical data (Yes/No, Pass/Fail)</td><td><span class="test-badge">Z-Test / Z-Interval</span></td><td>You're dealing with a proportion <span class="math">p</span></td></tr>
+              <tr><td>Quantitative data (weight, pulse, price)</td><td><span class="test-badge">T-Test / T-Interval</span></td><td>You're dealing with a mean <span class="math">μ</span>, <span class="math">σ</span> unknown</td></tr>
+              <tr><td>Before/after same person; spouses; paired cities; twins</td><td><span class="test-badge">Paired T-Test</span></td><td>Dependent data — analyze the <em>differences</em></td></tr>
+              <tr><td>Two separate, unrelated groups</td><td><span class="test-badge">Two-Sample T or Z</span></td><td>Independent data — compare the two groups</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="faq-item faq-card" data-cat="choose" data-keywords="z test t test choose population standard deviation sigma unknown known">
+        <button class="faq-trigger" onclick="toggleFAQ(this)">
+          <span class="q-icon">Q</span>
+          <span class="faq-q">How do I choose between a Z-test and a T-test when the problem doesn't say whether <span class="math">σ</span> is known?<div class="tag-row"><span class="tag s-tag">S15</span></div></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">
+          <p class="answer-head">The answer</p>
+          <div class="answer-text">
+            <p>In real-world statistics, you almost <em>never</em> know the population standard deviation <span class="math">σ</span>. The practical rule:</p>
+            <p><strong>Working with means?</strong> → Use the <span class="math">t</span>-distribution. Always. (Unless the problem explicitly states <span class="math">σ</span> is known — rare outside textbook examples.)</p>
+            <p><strong>Working with proportions?</strong> → Use the <span class="math">z</span>-distribution. The standard error formula uses <span class="math">p̂</span>, which you have.</p>
+          </div>
+          <div class="rule-box"><b>Simple rule:</b> Proportions → Z. Means → T. The only exception is means with known σ, which almost never happens in practice.</div>
+          <div class="mistake-box"><b>⚠️ Common mistake:</b> Seeing a large sample size (like n = 200) and switching to a Z-test for means because "the t-distribution approaches z at large n." That reasoning is technically true but practically irrelevant — always use the t-distribution for means unless σ is given.</div>
+        </div></div>
+      </div>
+
+      <div class="faq-item faq-card" data-cat="choose" data-keywords="paired independent samples hotel prices same city dependent">
+        <button class="faq-trigger" onclick="toggleFAQ(this)">
+          <span class="q-icon">Q</span>
+          <span class="faq-q">Why are hotel prices in the same city considered "paired" rather than independent samples?<div class="tag-row"><span class="tag s-tag">S19</span></div></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">
+          <p class="answer-head">The answer</p>
+          <div class="answer-text">
+            <p>The key question: <strong>Is each value in Group 1 directly linked to exactly one value in Group 2?</strong></p>
+            <p>Hotel A's price on Expedia and Hotel A's price on Booking.com are both about <em>Hotel A</em> — they're a natural pair. A nicer hotel will be expensive on both platforms. By taking the <em>difference</em> within each pair, we remove that hotel-to-hotel variation and focus purely on the platform price difference.</p>
+          </div>
+          <div class="tip-box"><b>🧠 Ask yourself:</b> "Can I draw a line connecting each observation in Group 1 to exactly one observation in Group 2?" If yes → paired. If the groups are randomly assembled with no natural link → independent.</div>
+          <div class="mistake-box"><b>⚠️ Common mistake:</b> Running a two-sample t-test on paired data. This ignores the natural connection between pairs and reduces the power of your test. When data is paired, running the wrong test can lead you to a completely different conclusion.</div>
+        </div></div>
+      </div>
+
+      <div class="faq-item faq-card" data-cat="choose" data-keywords="proportion mean identify data type categorical quantitative wording z interval t interval">
+        <button class="faq-trigger" onclick="toggleFAQ(this)">
+          <span class="q-icon">Q</span>
+          <span class="faq-q">How do I identify from the wording whether a question needs a proportion (<span class="math">z</span>-interval) or a mean (<span class="math">t</span>-interval)?<div class="tag-row"><span class="tag s-tag">S15</span><span class="tag s-tag">S19</span></div></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">
+          <p class="answer-head">The answer</p>
+          <div class="answer-text">
+            <p><strong>Proportion (Z):</strong> Asks about a fraction, percent, or rate. Look for: "what percent…", "what proportion…", "how many out of…", Yes/No responses, Pass/Fail counts.</p>
+            <p><strong>Mean (T):</strong> Asks about an average of a measurement. Look for: "what is the average…", "estimate the mean…", measurements like weight, height, income, time, score, temperature.</p>
+          </div>
+          <div class="mistake-box"><b>⚠️ Common mistake:</b> Getting fooled by a number that looks like a proportion but isn't — e.g., "the average score was 0.82 out of 1.0." That 0.82 is still a mean (of a score), not a proportion, so it needs a t-procedure. Ask: <em>what did we measure on each person?</em></div>
+        </div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 3: Hypothesis Testing & P-Values -->
+  <section class="section-group" data-cat="hyp">
+    <div class="section-header">
+      <div class="section-icon" style="background:#fdf0ec;">⚖️</div>
+      <h2 class="section-title">Hypothesis Testing &amp; P-Values</h2>
+      <span class="section-count">S16 · S17 · 6 questions</span>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item faq-card" data-cat="hyp" data-keywords="one tailed two tailed hypothesis keyword greater less different not equal alternative">
+        <button class="faq-trigger" onclick="toggleFAQ(this)">
+          <span class="q-icon">Q</span>
+          <span class="faq-q">How do I know if a hypothesis test should be one-tailed or two-tailed?<div class="tag-row"><span class="tag s-tag">S16</span></div></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">
+          <p class="answer-head">The answer</p>
+          <div class="answer-text">
+            <p>Look at H₁ (the alternative hypothesis — what you're trying to show evidence for):</p>
+            <p><strong>Two-tailed</strong> (<span class="math">H₁: μ ≠ value</span>): Keywords: "different from," "has changed," "is not equal to."</p>
+            <p><strong>One-tailed</strong> (<span class="math">H₁: μ &gt; value</span> or <span class="math">&lt; value</span>): Keywords: "greater than," "more than," "increased," "less than," "decreased," "improved."</p>
+          </div>
+          <div class="tip-box"><b>🧠 Keyword check:</b> "Different" = Two-tailed (≠). "Greater / Less / More / Fewer / Increased / Decreased" = One-tailed.</div>
+          <div class="mistake-box"><b>⚠️ Common mistake:</b> Writing H₁ as a two-tailed test ("≠") when the research question clearly has a direction. A one-tailed test has more power when you have a directional prediction — using two-tailed when one-tailed is justified makes it harder to detect the effect.</div>
+        </div></div>
+      </div>
+
+      <div class="faq-item faq-card" data-cat="hyp" data-keywords="conclusion wording sufficient insufficient evidence p-value alpha reject fail to reject 5th step">
+        <button class="faq-trigger" onclick="toggleFAQ(this)">
+          <span class="q-icon">Q</span>
+          <span class="faq-q">How do I word the final conclusion? When do I say "sufficient" vs. "insufficient" evidence?<div class="tag-row"><span class="tag s-tag">S16</span></div></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">
+          <p class="answer-head">The answer</p>
+          <div class="answer-text">
+            <p><strong>If p-value &lt; α → Reject H₀:</strong> "There IS sufficient evidence to support the claim that [H₁ in context]."</p>
+            <p><strong>If p-value ≥ α → Fail to Reject H₀:</strong> "There is NOT sufficient evidence to support the claim that [H₁ in context]."</p>
+          </div>
+          <div class="rule-box"><b>🎵 Memory rhyme:</b> "If the P is low, the Null must go!" Small p-value = reject the null = sufficient evidence.</div>
+          <div class="mistake-box"><b>⚠️ Common mistake:</b> Forgetting to write the conclusion <em>in context</em>. "Reject H₀" alone is never a complete conclusion — you must state what that decision means for the real-world claim. Always reference the variable, the population, and the direction of the finding.</div>
+        </div></div>
+      </div>
+
+      <div class="faq-item faq-card" data-cat="hyp" data-keywords="p-value meaning definition null hypothesis probability simple terms">
+        <button class="faq-trigger" onclick="toggleFAQ(this)">
+          <span class="q-icon">Q</span>
+          <span class="faq-q">In simple terms, what does the <span class="math">p</span>-value actually represent?<div class="tag-row"><span class="tag s-tag">S16</span></div></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">
+          <p class="answer-head">The answer</p>
+          <div class="answer-text">
+            <p>The <span class="math">p</span>-value is the probability of obtaining a test statistic as extreme as (or more extreme than) yours, <em>assuming H₀ is true</em>.</p>
+            <p>Think of it as: <strong>"If H₀ were true, how surprising is my data?"</strong> A small p-value = surprising = reason to doubt H₀. A large p-value = not surprising = no strong reason to reject H₀.</p>
+          </div>
+          <div class="info-box"><b>Important:</b> The p-value is NOT the probability that H₀ is true, and NOT the probability you made an error. It is only the probability of observing your data (or more extreme) assuming H₀ is true.</div>
+          <div class="mistake-box"><b>⚠️ Common mistake:</b> Saying "the p-value is 0.03, so there's a 3% chance the null hypothesis is true." This is a fundamental misinterpretation. The null is either true or false — it's not a random event with a probability.</div>
+        </div></div>
+      </div>
+
+      <div class="faq-item faq-card" data-cat="hyp" data-keywords="fail to reject accept null hypothesis double negative not guilty court">
+        <button class="faq-trigger" onclick="toggleFAQ(this)">
+          <span class="q-icon">Q</span>
+          <span class="faq-q">Why do we say "Fail to Reject" instead of just "Accept" the null? It feels like a double negative.<div class="tag-row"><span class="tag s-tag">S16</span><span class="tag s-tag">S17</span></div></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">
+          <p class="answer-head">The answer</p>
+          <div class="answer-text">
+            <p>Think of it like a court verdict. A jury that acquits someone says "Not Guilty" — not "Innocent." The difference matters:</p>
+            <p>"Not Guilty" = <em>lack of evidence to convict</em> (this is "Fail to Reject")</p>
+            <p>"Innocent" = <em>proven they didn't do it</em> (this would be "Accept H₀" — and we can never prove that)</p>
+          </div>
+          <div class="tip-box"><b>🧠 Court analogy:</b> "Fail to Reject H₀" = "Not Guilty." We lacked evidence, not proof of innocence.</div>
+          <div class="mistake-box"><b>⚠️ Common mistake:</b> Writing "we accept H₀" or "we proved H₀ is true." This will lose you points — we can never prove a null hypothesis. We can only fail to find sufficient evidence against it.</div>
+        </div></div>
+      </div>
+
+      <div class="faq-item faq-card" data-cat="hyp" data-keywords="type 1 type 2 error false positive false negative alpha consequences reject true null">
+        <button class="faq-trigger" onclick="toggleFAQ(this)">
+          <span class="q-icon">Q</span>
+          <span class="faq-q">How do I keep Type I and Type II errors straight? What are the real-world consequences?<div class="tag-row"><span class="tag s-tag">S17</span></div></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">
+          <p class="answer-head">The answer</p>
+          <div class="error-grid">
+            <div class="error-card type1">
+              <div class="error-label">Type I Error</div>
+              <div class="error-name">False Positive</div>
+              <div class="error-desc">Rejecting H₀ when it's actually true. Probability = α (the significance level you set).</div>
+            </div>
+            <div class="error-card type2">
+              <div class="error-label">Type II Error</div>
+              <div class="error-name">False Negative</div>
+              <div class="error-desc">Failing to reject H₀ when it's actually false. Probability = β. Power = 1 − β.</div>
+            </div>
+          </div>
+          <div class="answer-text" style="margin-top:0.75rem;">
+            <p><strong>Medical example:</strong> H₀: Patient does NOT have the disease. Type I = telling a healthy patient they're sick (unnecessary treatment). Type II = telling a sick patient they're healthy (missing a real disease — often more dangerous).</p>
+          </div>
+          <div class="mistake-box"><b>⚠️ Common mistake:</b> Swapping the two types. Remember: Type <strong>I</strong> error occurs when you <strong>incorrectly reject</strong> (reject a true null). Lower α → fewer Type I errors, but more Type II errors. There's always a trade-off.</div>
+        </div></div>
+      </div>
+
+      <div class="faq-item faq-card" data-cat="hyp" data-keywords="paired test missing data one measurement incomplete before after">
+        <button class="faq-trigger" onclick="toggleFAQ(this)">
+          <span class="q-icon">Q</span>
+          <span class="faq-q">If I have a paired design but some participants are missing one measurement, can I still use a paired t-test?<div class="tag-row"><span class="tag s-tag">S19</span><span class="tag s-tag">S20</span></div></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">
+          <p class="answer-head">The answer</p>
+          <div class="answer-text">
+            <p>No — for a paired t-test, you can only use participants who have <em>both</em> measurements. If either value is missing, you must exclude that entire pair, because the test computes differences <span class="math">d = x₁ − x₂</span> for each unit — you need both numbers to get a difference.</p>
+            <p>This reduces your effective sample size (n = number of complete pairs), affecting degrees of freedom and the power of your test.</p>
+          </div>
+          <div class="mistake-box"><b>⚠️ Common mistake:</b> Carrying incomplete pairs into the analysis and reporting a larger n than you actually have. This inflates power artificially and can make results look more significant than they are.</div>
+        </div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 4: Advanced Mechanics & Technology -->
+  <section class="section-group" data-cat="adv">
+    <div class="section-header">
+      <div class="section-icon" style="background:#eef2ff;">⚙️</div>
+      <h2 class="section-title">Advanced Mechanics &amp; Technology</h2>
+      <span class="section-count">S20 · 4 questions</span>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item faq-card" data-cat="adv" data-keywords="two sample order matter positive negative interval direction absolute value">
+        <button class="faq-trigger" onclick="toggleFAQ(this)">
+          <span class="q-icon">Q</span>
+          <span class="faq-q">Does the order of samples matter in a two-sample test? Why don't we just use absolute values?<div class="tag-row"><span class="tag s-tag">S20</span></div></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">
+          <p class="answer-head">The answer</p>
+          <div class="answer-text">
+            <p>Order affects the sign of your result but not your conclusion. Switching the order flips the sign of the test statistic and interval, but the p-value stays the same.</p>
+            <p>We don't use absolute values because <strong>direction matters</strong>. A difference of +12 means Group 1 is higher; −12 means Group 2 is higher. The sign tells you which group had the larger value — which is part of interpreting results in context.</p>
+          </div>
+          <div class="tip-box"><b>🧠 Tip:</b> Decide your order before running the test and write it into your hypotheses (e.g., H₁: μ₁ − μ₂ &gt; 0). Stay consistent throughout.</div>
+          <div class="mistake-box"><b>⚠️ Common mistake:</b> Switching the group order mid-problem — e.g., computing the test statistic with Group 1 first, then writing the confidence interval with Group 2 first. This creates a sign mismatch that contradicts your own hypotheses. Pick an order, commit to it everywhere.</div>
+        </div></div>
+      </div>
+
+      <div class="faq-item faq-card" data-cat="adv" data-keywords="degrees of freedom df n-1 subtract 1 remember trick t test">
+        <button class="faq-trigger" onclick="toggleFAQ(this)">
+          <span class="q-icon">Q</span>
+          <span class="faq-q">I keep forgetting the degrees of freedom formula for <span class="math">t</span>-tests. Is there a trick?<div class="tag-row"><span class="tag s-tag">S20</span></div></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">
+          <p class="answer-head">The answer</p>
+          <div class="answer-text">
+            <p><strong>One-sample t-test:</strong> df = n − 1</p>
+            <p><strong>Paired t-test:</strong> df = n − 1, where n = number of <em>pairs</em></p>
+            <p><strong>Two-sample t-test:</strong> df is complex (Welch's formula). Let ArtOfStat handle this one.</p>
+            <p>Why subtract 1? You "lose" one degree of freedom because your sample data was used to estimate <span class="math">μ</span>. That estimation uses up one piece of information.</p>
+          </div>
+          <div class="tip-box"><b>🧠 Simple picture:</b> 5 numbers that must average to 10 — once you know 4 of them, the 5th is forced. You only had 4 "free" choices. That's df = n − 1 = 4.</div>
+          <div class="mistake-box"><b>⚠️ Common mistake:</b> Using df = n (forgetting the −1), or for paired tests, using the total number of observations rather than the number of pairs. For paired, n is the number of pairs — if you have 15 before-after measurements, df = 15 − 1 = 14, not 29.</div>
+        </div></div>
+      </div>
+
+      <div class="faq-item faq-card" data-cat="adv" data-keywords="z* t* critical value confidence interval when use which sigma known unknown proportion mean">
+        <button class="faq-trigger" onclick="toggleFAQ(this)">
+          <span class="q-icon">Q</span>
+          <span class="faq-q">When calculating a confidence interval, should I use a <span class="math">z*</span> or a <span class="math">t*</span> critical value?<div class="tag-row"><span class="tag s-tag">S14</span><span class="tag s-tag">S16</span></div></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">
+          <p class="answer-head">The answer</p>
+          <div class="answer-text">
+            <p><strong>Use z*</strong> when estimating a proportion (p), or the rare case where σ is known.</p>
+            <p><strong>Use t*</strong> when estimating a mean and σ is unknown (almost always in practice).</p>
+            <p>The t* value is always slightly larger than z* at the same confidence level — it accounts for extra uncertainty from estimating σ with s. As df → ∞, t* → z*.</p>
+          </div>
+          <div class="rule-box"><b>Easy rule:</b> "Estimating a mean and σ not given → use t*. Estimating a proportion → use z*."</div>
+          <div class="mistake-box"><b>⚠️ Common mistake:</b> Using z* = 1.96 for a t-interval just because it's a familiar number. The t* for 95% confidence with small df can be quite different — e.g., with df = 10, t* ≈ 2.228. Always look up t* with the correct degrees of freedom.</div>
+        </div></div>
+      </div>
+
+      <div class="faq-item faq-card" data-cat="adv" data-keywords="artofstat p-value different hand calculation chatgpt rounding technology software">
+        <button class="faq-trigger" onclick="toggleFAQ(this)">
+          <span class="q-icon">Q</span>
+          <span class="faq-q">Why does ArtOfStat give me a slightly different p-value than my hand calculations?<div class="tag-row"><span class="tag s-tag">S16</span><span class="tag s-tag">S20</span></div></span>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">
+          <p class="answer-head">The answer</p>
+          <div class="answer-text">
+            <p><strong>1. Rounding accumulation:</strong> When you round intermediate values (test statistic to 2 decimal places), that small error compounds when looking up the p-value. ArtOfStat stores 15+ decimal places internally.</p>
+            <p><strong>2. Different df formulas:</strong> For two-sample t-tests, different software may use different df approximations (Welch's vs. conservative df = min(n₁−1, n₂−1)). Slightly different df → slightly different p-value.</p>
+          </div>
+          <div class="info-box"><b>Best practice:</b> Use ArtOfStat for final answers. Understand the hand-calculation process conceptually, but trust technology for precision. Small differences (0.04 vs. 0.043) don't change your conclusion.</div>
+          <div class="mistake-box"><b>⚠️ Common mistake:</b> Choosing to use ChatGPT instead of ArtOfStat for final p-value calculations. AI tools can hallucinate statistical output or use slightly different assumptions. For this course, ArtOfStat is the validated, consistent tool — use it.</div>
+        </div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ARTOFSTAT GUIDE -->
+  <div class="artofstat-section">
+    <div class="artofstat-header">
+      <div>
+        <h2>🎯 ArtOfStat — Unit 3 Quick Guide</h2>
+        <p>Where to click for every Unit 3 procedure · video links included</p>
+      </div>
+    </div>
+    <div class="artofstat-intro">
+      All procedures below are at <a href="https://artofstat.com/web-apps" target="_blank">artofstat.com/web-apps</a>. For the full guide with screenshots, see <a href="https://docs.google.com/document/d/1GIj3xBRs4VYCK3FMfa2Y7JeqqXgsqIquA2IOi4FgaZU/edit?usp=sharing" target="_blank">Dr. Romero's ArtOfStat Guide ↗</a>. Pay attention to the ⚠️ WALD/SCORE notes — they affect your output.
+    </div>
+    <div class="artofstat-grid">
+
+      <div class="aos-card">
+        <span class="aos-test-badge z">Z · Proportion</span>
+        <div class="aos-name">1-Proportion Z-Interval</div>
+        <div class="aos-where">Confidence Intervals & Significance Tests (One Sample) → <strong>Inference for Proportions</strong> → "Confidence Interval &amp; Significance Test" tab</div>
+        <div class="aos-note">⚠️ Use WALD for Test Type</div>
+        <a class="aos-video-btn" href="https://youtu.be/Etk615NLyB8" target="_blank">
+          <svg class="aos-video-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Watch video
+        </a>
+      </div>
+
+      <div class="aos-card">
+        <span class="aos-test-badge z">Z · Proportion</span>
+        <div class="aos-name">1-Proportion Z-Test</div>
+        <div class="aos-where">Confidence Intervals & Significance Tests (One Sample) → <strong>Inference for Proportions</strong> → "Confidence Interval &amp; Significance Test" tab</div>
+        <div class="aos-note">⚠️ Use SCORE for Test Type</div>
+        <a class="aos-video-btn" href="https://youtu.be/_2U-FBb6464" target="_blank">
+          <svg class="aos-video-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Watch video
+        </a>
+      </div>
+
+      <div class="aos-card">
+        <span class="aos-test-badge t">T · Mean</span>
+        <div class="aos-name">1-Sample T-Interval &amp; T-Test</div>
+        <div class="aos-where">Confidence Intervals & Significance Tests (One Sample) → <strong>Inference for Means</strong> → "Confidence Interval &amp; Significance Test" tab</div>
+        <a class="aos-video-btn" href="https://youtu.be/lUk4R-oL1o4" target="_blank">
+          <svg class="aos-video-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Watch video
+        </a>
+      </div>
+
+      <div class="aos-card">
+        <span class="aos-test-badge z">Z · Proportion</span>
+        <div class="aos-name">2-Proportion Z-Interval</div>
+        <div class="aos-where">Confidence Intervals &amp; Tests Comparing Two Groups → <strong>Compare Two Proportions</strong> → "Confidence Interval &amp; Significance Test" tab</div>
+        <div class="aos-note">⚠️ Use WALD for Test Type</div>
+        <a class="aos-video-btn" href="https://youtu.be/uH9e6ktiy2Y?t=168" target="_blank">
+          <svg class="aos-video-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Watch video
+        </a>
+      </div>
+
+      <div class="aos-card">
+        <span class="aos-test-badge z">Z · Proportion</span>
+        <div class="aos-name">2-Proportion Z-Test</div>
+        <div class="aos-where">Confidence Intervals &amp; Tests Comparing Two Groups → <strong>Compare Two Proportions</strong> → "Confidence Interval &amp; Significance Test" tab</div>
+        <div class="aos-note">⚠️ Use SCORE for Test Type</div>
+        <a class="aos-video-btn" href="https://youtu.be/o-asOEskLl4?t=219" target="_blank">
+          <svg class="aos-video-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Watch video
+        </a>
+      </div>
+
+      <div class="aos-card">
+        <span class="aos-test-badge t">T · Mean</span>
+        <div class="aos-name">2-Sample T-Test (Independent)</div>
+        <div class="aos-where">Confidence Intervals &amp; Tests Comparing Two Groups → <strong>Compare Two Means</strong> → "Confidence Interval &amp; Significance Test" tab</div>
+        <a class="aos-video-btn" href="https://youtu.be/OsePK0_4R6E" target="_blank">
+          <svg class="aos-video-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Watch video
+        </a>
+      </div>
+
+      <div class="aos-card">
+        <span class="aos-test-badge t">T · Mean</span>
+        <div class="aos-name">Matched / Paired T-Test</div>
+        <div class="aos-where">Confidence Intervals &amp; Tests Comparing Two Groups → <strong>Compare Two Means</strong> → <em>"Two Dependent Samples"</em> tab</div>
+        <a class="aos-video-btn" href="https://youtu.be/rNJ0bt9XqL0" target="_blank">
+          <svg class="aos-video-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Watch video
+        </a>
+      </div>
+
+      <div class="aos-card">
+        <span class="aos-test-badge" style="background:#fef3d8;color:#7a4e05;border:1px solid #f0c97a;">Regression</span>
+        <div class="aos-name">Linear Regression</div>
+        <div class="aos-where">Association, Correlation &amp; Regression → <strong>Linear Regression</strong> → "Fit Linear Regression Model" tab</div>
+        <a class="aos-video-btn" href="https://youtu.be/mVq6f4GbvyU?si=pKICew8hVfX_-Gbb" target="_blank">
+          <svg class="aos-video-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          Watch video
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="noResults" style="text-align:center;padding:3rem 1rem;display:none;">
+    <p style="font-size:2rem;margin-bottom:0.5rem;">🔍</p>
+    <p style="font-size:15px;color:var(--muted);">No questions matched <strong id="searchTerm" style="color:var(--navy);"></strong>.</p>
+    <p style="margin-top:0.4rem;font-size:14px;color:var(--muted);">Try a different keyword, or clear the search to browse all topics.</p>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <p><strong>STAT C1000 · Unit 3 Student FAQ</strong></p>
+    <p style="margin-top:6px;">Santa Ana College · SAC Hope Academy · Dr. Romero &nbsp;·&nbsp; Questions collected from your classmates and organized with care.</p>
+    <p style="margin-top:6px;font-style:italic;">"Hope is not a passive wish — it is an active choice." — C.R. Snyder</p>
+  </div>
+</footer>
+
+<script>
+/* ── DECISION TREE ── */
+var track = 'ci';
+var treeHistory = [];
+var currentOpts = [];
+
+var tree = {
+  start: {
+    q: "What are you trying to do?",
+    ctx: "Start here every time you see a Unit 3 problem.",
+    opts: [
+      { label: "Estimate a value", sub: "I need a confidence interval", next: "data_type", setTrack: "ci" },
+      { label: "Test a specific claim", sub: "I need a hypothesis test", next: "data_type", setTrack: "ht" }
+    ]
+  },
+  data_type: {
+    q: "What type of data is your response variable?",
+    ctx: "Ask: what did we actually measure or record about each person or unit?",
+    opts: [
+      { label: "Categorical", sub: "Yes/No · Pass/Fail · counts · percents · rates", next: "groups_cat" },
+      { label: "Quantitative", sub: "Measurements like weight, time, score, income, pulse", next: "groups_quant" }
+    ]
+  },
+  groups_cat: {
+    q: "How many groups or samples do you have?",
+    ctx: "Count the distinct populations or groups being analyzed.",
+    opts: [
+      { label: "One group", sub: "One population or sample", next: "result_cat_one" },
+      { label: "Two groups", sub: "Comparing two populations or samples", next: "result_cat_two" }
+    ]
+  },
+  groups_quant: {
+    q: "How many groups or samples do you have?",
+    ctx: "Count the distinct populations or groups being analyzed.",
+    opts: [
+      { label: "One group", sub: "One population or sample", next: "result_quant_one" },
+      { label: "Two groups", sub: "Comparing two populations or samples", next: "paired_check" }
+    ]
+  },
+  paired_check: {
+    q: "Are the two samples paired or dependent?",
+    ctx: "Can you draw a line connecting each value in Group 1 to exactly one value in Group 2?",
+    opts: [
+      { label: "Yes — they're paired", sub: "Before/after same person · spouses · matched cities · twins", next: "result_paired" },
+      { label: "No — they're independent", sub: "Two completely separate, unrelated groups", next: "result_indep" }
+    ]
+  }
+};
+
+var results = {
+  result_cat_one: {
+    ci: { name: "1-Proportion Z-Interval", sym: "p&#x0302; &plusmn; z* &sdot; &radic;(p&#x0302;(1&minus;p&#x0302;)/n)", note: "In ArtOfStat: use WALD for Test Type of Interval", vid: "https://youtu.be/Etk615NLyB8" },
+    ht: { name: "1-Proportion Z-Test", sym: "H&#8320;: p = p&#8320; &nbsp; vs &nbsp; H&#8321;: p &ne; / &gt; / &lt; p&#8320;", note: "In ArtOfStat: use SCORE for Test Type", vid: "https://youtu.be/_2U-FBb6464" }
+  },
+  result_cat_two: {
+    ci: { name: "2-Proportion Z-Interval", sym: "(p&#x0302;&#8321; &minus; p&#x0302;&#8322;) &plusmn; z* &sdot; SE", note: "In ArtOfStat: use WALD for Test Type of Interval", vid: "https://youtu.be/uH9e6ktiy2Y?t=168" },
+    ht: { name: "2-Proportion Z-Test", sym: "H&#8320;: p&#8321; = p&#8322; &nbsp; vs &nbsp; H&#8321;: p&#8321; &ne; / &gt; / &lt; p&#8322;", note: "In ArtOfStat: use SCORE for Test Type", vid: "https://youtu.be/o-asOEskLl4?t=219" }
+  },
+  result_quant_one: {
+    ci: { name: "1-Sample T-Interval", sym: "x&#772; &plusmn; t* &sdot; (s / &radic;n), &nbsp; df = n &minus; 1", note: "", vid: "https://youtu.be/lUk4R-oL1o4" },
+    ht: { name: "1-Sample T-Test", sym: "H&#8320;: &mu; = &mu;&#8320; &nbsp; vs &nbsp; H&#8321;: &mu; &ne; / &gt; / &lt; &mu;&#8320;", note: "", vid: "https://youtu.be/lUk4R-oL1o4" }
+  },
+  result_paired: {
+    ci: { name: "Paired T-Interval", sym: "d&#772; &plusmn; t* &sdot; (s&#x1D421; / &radic;n), &nbsp; df = n &minus; 1", note: "In ArtOfStat: use the 'Two Dependent Samples' tab", vid: "https://youtu.be/rNJ0bt9XqL0" },
+    ht: { name: "Paired T-Test", sym: "H&#8320;: &mu;&#x1D421; = 0 &nbsp; vs &nbsp; H&#8321;: &mu;&#x1D421; &ne; / &gt; / &lt; 0", note: "In ArtOfStat: use the 'Two Dependent Samples' tab", vid: "https://youtu.be/rNJ0bt9XqL0" }
+  },
+  result_indep: {
+    ci: { name: "2-Sample T-Interval (Independent)", sym: "(x&#772;&#8321; &minus; x&#772;&#8322;) &plusmn; t* &sdot; SE", note: "", vid: "https://youtu.be/OsePK0_4R6E" },
+    ht: { name: "2-Sample T-Test (Independent)", sym: "H&#8320;: &mu;&#8321; = &mu;&#8322; &nbsp; vs &nbsp; H&#8321;: &mu;&#8321; &ne; / &gt; / &lt; &mu;&#8322;", note: "", vid: "https://youtu.be/OsePK0_4R6E" }
+  }
+};
+
+function renderTree(nodeId) {
+  document.getElementById('breadcrumb').innerHTML =
+    treeHistory.map(function(h){ return '<span class="crumb">'+h+'</span>'; }).join('');
+
+  if (results[nodeId]) {
+    var r = results[nodeId][track];
+    document.getElementById('treeContent').innerHTML =
+      '<div class="tree-result">' +
+        '<div class="result-label">' + (track==='ci' ? 'Confidence Interval' : 'Hypothesis Test') + ' &mdash; your procedure</div>' +
+        '<div class="result-name">' + r.name + '</div>' +
+        '<div class="result-symbol">' + r.sym + '</div>' +
+        (r.note ? '<div class="result-note">&#128205; ' + r.note + '</div>' : '') +
+        '<div class="result-actions">' +
+          '<a class="result-btn primary" href="' + r.vid + '" target="_blank">&#9654; Watch ArtOfStat video</a>' +
+          '<button class="result-btn secondary" onclick="startTree()">&#8634; Start over</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="tree-restart">' +
+        '<span class="tree-step-indicator">Reached in ' + treeHistory.length + ' step' + (treeHistory.length!==1?'s':'') + '</span>' +
+      '</div>';
+    return;
+  }
+
+  var node = tree[nodeId];
+  if (!node) return;
+  currentOpts = node.opts;
+
+  var optsHtml = node.opts.map(function(o, i){
+    return '<button class="tree-option" onclick="chooseOption(' + i + ')">' +
+      '<span class="tree-option-label">' + o.label + '</span>' +
+      '<span class="tree-option-sub">' + o.sub + '</span>' +
+    '</button>';
+  }).join('');
+
+  document.getElementById('treeContent').innerHTML =
+    '<div class="tree-question">' + node.q + '</div>' +
+    '<div class="tree-context">' + node.ctx + '</div>' +
+    '<div class="tree-options">' + optsHtml + '</div>' +
+    (treeHistory.length > 0
+      ? '<div class="tree-restart"><button class="restart-btn" onclick="startTree()">&#8634; Start over</button>' +
+        '<span class="tree-step-indicator">Step ' + (treeHistory.length + 1) + '</span></div>'
+      : '');
+}
+
+function chooseOption(i) {
+  var o = currentOpts[i];
+  if (o.setTrack) track = o.setTrack;
+  treeHistory.push(o.label);
+  renderTree(o.next);
+}
+
+function startTree() { track = 'ci'; treeHistory = []; currentOpts = []; renderTree('start'); }
+
+startTree();
+
+/* ── FAQ ACCORDION ── */
+function toggleFAQ(btn) {
+  var card = btn.parentElement;
+  var body = card.querySelector('.faq-body');
+  var open = card.classList.contains('open');
+  if (open) { card.classList.remove('open'); body.style.maxHeight = '0'; }
+  else { card.classList.add('open'); body.style.maxHeight = (body.scrollHeight + 200) + 'px'; }
+}
+
+/* ── FILTER + SEARCH ── */
+var activeFilter = 'all';
+function filterCat(btn, cat) {
+  activeFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  applyFilters();
+}
+document.getElementById('searchInput').addEventListener('input', applyFilters);
+
+function applyFilters() {
+  var term = document.getElementById('searchInput').value.toLowerCase().trim();
+  var visible = 0;
+  document.querySelectorAll('.faq-item').forEach(function(item) {
+    var catMatch = (activeFilter === 'all') || (item.getAttribute('data-cat') === activeFilter);
+    var kw = (item.getAttribute('data-keywords') || '') + ' ' + (item.textContent || '');
+    var searchMatch = !term || kw.toLowerCase().includes(term);
+    if (catMatch && searchMatch) { item.classList.remove('hidden'); visible++; }
+    else {
+      item.classList.add('hidden');
+      var b = item.querySelector('.faq-body');
+      if (b) { item.classList.remove('open'); b.style.maxHeight = '0'; }
+    }
+  });
+  document.querySelectorAll('.section-group').forEach(function(sec) {
+    var catMatch = (activeFilter === 'all') || (sec.getAttribute('data-cat') === activeFilter);
+    var vis = sec.querySelectorAll('.faq-item:not(.hidden)').length;
+    sec.classList.toggle('hidden', !catMatch || vis === 0);
+  });
+  var nr = document.getElementById('noResults');
+  if (visible === 0) { nr.style.display = 'block'; document.getElementById('searchTerm').textContent = '"' + term + '"'; }
+  else { nr.style.display = 'none'; }
+}
+</script>
+</body>
+</html>
